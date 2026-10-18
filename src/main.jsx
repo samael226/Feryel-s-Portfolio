@@ -132,18 +132,18 @@ function ThreeWalkthrough({ onProgress }) {
     // A single light ribbon runs through all seven environments, giving the camera a visual thread to follow.
     const routePoints = Array.from({ length: 29 }, (_, index) => {
       const u = index / 28;
-      const z = 7 - u * 84;
+      const z = 2 - u * 84;
       const x = Math.sin(u * Math.PI * 7) * 4.15 + Math.sin(u * Math.PI * 14) * .28;
       const y = Math.sin(u * Math.PI * 5.5 + .35) * 1.45 + Math.cos(u * Math.PI * 11) * .22;
       return new THREE.Vector3(x, y, z);
     });
     const routeCurve = new THREE.CatmullRomCurve3(routePoints, false, "catmullrom", .28);
     const routeGeometry = new THREE.TubeGeometry(routeCurve, 700, .035, 10, false);
-    const routeRibbon = new THREE.Mesh(routeGeometry, new THREE.MeshBasicMaterial({ color: 0xf7a8b8, transparent: true, opacity: .66, blending: THREE.AdditiveBlending, depthWrite: false }));
+    const routeRibbon = new THREE.Mesh(routeGeometry, new THREE.MeshBasicMaterial({ color: 0xf7a8b8, transparent: true, opacity: .24, depthWrite: false }));
     scene.add(routeRibbon);
-    const routeCore = new THREE.Mesh(new THREE.SphereGeometry(.12, 24, 20), new THREE.MeshBasicMaterial({ color: 0xfff8ff, blending: THREE.AdditiveBlending }));
-    const routeGlow = new THREE.Mesh(new THREE.SphereGeometry(.34, 24, 20), new THREE.MeshBasicMaterial({ color: 0xcaabe5, transparent: true, opacity: .28, blending: THREE.AdditiveBlending, depthWrite: false }));
-    const routeLight = new THREE.PointLight(0xf7a8b8, 18, 9, 2);
+    const routeCore = new THREE.Mesh(new THREE.SphereGeometry(.085, 24, 20), new THREE.MeshBasicMaterial({ color: 0xfff8ff, blending: THREE.AdditiveBlending }));
+    const routeGlow = new THREE.Mesh(new THREE.SphereGeometry(.24, 24, 20), new THREE.MeshBasicMaterial({ color: 0xcaabe5, transparent: true, opacity: .22, blending: THREE.AdditiveBlending, depthWrite: false }));
+    const routeLight = new THREE.PointLight(0xf7a8b8, 6, 7, 2);
     scene.add(routeCore, routeGlow, routeLight);
 
     // 00 · Arrival: layered portals lead into the portfolio.
@@ -214,6 +214,7 @@ function ThreeWalkthrough({ onProgress }) {
     const render=()=>{
       const t=clock.getElapsedTime(),p=state.progress,travel=p*7;
       const stage=Math.min(6,Math.floor(travel));
+      grassia.visible=stage===2;
       const ambientMotion=prefersReducedMotion?0:1;
       sky.material.uniforms.uTime.value=t*ambientMotion;sky.material.uniforms.uMood.value=smooth(3.2,5.9,travel);
       const targetZ=10-travel*12;
