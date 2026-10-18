@@ -26,3 +26,5 @@ The build output is written to `dist/`.
 - GSAP ScrollTrigger for scroll progress
 
 The downloadable CV is in `public/assets/`.
+
+The site deploys to GitHub Pages automatically whenever a commit reaches `main`.
